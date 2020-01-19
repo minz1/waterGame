@@ -8,17 +8,28 @@ public class WButton : Button
     // static properties of each button
     private readonly float BasePrice;
     private readonly float CashPerSecond;
-    private readonly string UnitName;
+    private readonly string _UnitName;
     private readonly bool IsBad;
     private Game Game;
 
     // more dynamic properties of each button
-    private int NumUnits = 0;
+    private int _NumUnits = 0;
     private float CurrentPrice = 0f;
 
-    public int GetNumUnits()
+    public int NumUnits
     {
-        return NumUnits;
+        get
+        {
+            return _NumUnits;
+        }
+    }
+
+    public string UnitName
+    {
+        get
+        {
+            return _UnitName;
+        }
     }
 
     public float Purchase(float money)
@@ -28,7 +39,7 @@ public class WButton : Button
         if (money >= CurrentPrice)
         {
             moneyLeft = (money - CurrentPrice);
-            NumUnits += 1;
+            _NumUnits += 1;
 
             CurrentPrice += (CurrentPrice * 0.5f);
         }
@@ -49,7 +60,7 @@ public class WButton : Button
 
     public override void _PhysicsProcess(float delta)
     {
-        Text = $"Buy a {UnitName} (Cost: {CurrentPrice:C2}, makes {CashPerSecond:C2}/s)";
+        Text = $"{UnitName} (Cost: {CurrentPrice:C2}, makes {CashPerSecond:C2}/s)";
     }
 
     public void OnButtonRelease()
@@ -72,7 +83,7 @@ public class WButton : Button
 
     public WButton(string unitName, float basePrice, float cashPerSecond, bool isBad) : base()
     {
-        this.UnitName = unitName;
+        this._UnitName = unitName;
         this.BasePrice = basePrice;
         this.CashPerSecond = cashPerSecond;
         this.IsBad = isBad;

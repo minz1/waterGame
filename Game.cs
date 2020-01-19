@@ -10,7 +10,6 @@ public class Game : Node2D
 
     // Labels for different text labels in the game
     private Label MoneyLabel;
-    private Label WellLabel;
     private Label ProfitLabel;
 
     // List of all the buttons in the game
@@ -51,13 +50,16 @@ public class Game : Node2D
 
     public void IncreaseBadPoints() { BadPoints++; }
 
-    private void CreateButtons()
+    private void CreateFirstStageButtons()
     {
-        WButton wellButton = new WButton("Well", 10, 1, false);
+        WButton wellButton = new WButton("Wells", 10, 1, false);
         GUI.AddChild(wellButton);
         Buttons.Add(wellButton);
         wellButton.SetPosition(new Vector2(90f, 180f));
         wellButton.SetSize(new Vector2(220f, 100f));
+
+        WLabel wellLabel = new WLabel(wellButton);
+        GUI.AddChild(wellLabel);
 
         WButton ecoFiltButton = new WButton("Eco-Friendly Filtration", 25, 2, false);
         GUI.AddChild(ecoFiltButton);
@@ -65,24 +67,29 @@ public class Game : Node2D
         ecoFiltButton.SetPosition(new Vector2(90f, 370f));
         ecoFiltButton.SetSize(new Vector2(220f, 100f));
 
+        WLabel ecoFiltLabel = new WLabel(ecoFiltButton);
+        GUI.AddChild(ecoFiltLabel);
+
         WButton cheapFiltButton = new WButton("Cheap Filtration", 15, 5, true);
         GUI.AddChild(cheapFiltButton);
         Buttons.Add(cheapFiltButton);
         cheapFiltButton.SetPosition(new Vector2(500f, 370f));
         cheapFiltButton.SetSize(new Vector2(220f, 100f));
+
+        WLabel cheapFiltLabel = new WLabel(cheapFiltButton);
+        GUI.AddChild(cheapFiltLabel);
     }
 
     public override void _Ready()
     {
         // Pull in our required labels
-        MoneyLabel = GetNode<Label>("GUI/MoneyLabel");
-        WellLabel = GetNode<Label>("GUI/WellLabel");
-        ProfitLabel = GetNode<Label>("GUI/ProfitLabel");
+        MoneyLabel = GetNode<Label>("GUI/CanvasLayer/MoneyLabel");
+        ProfitLabel = GetNode<Label>("GUI/CanvasLayer/ProfitLabel");
 
         // Pull in GUI reference
         GUI = GetNode<Control>("GUI");
 
-        CreateButtons();
+        CreateFirstStageButtons();
     }
 
     public override void _PhysicsProcess(float delta)
@@ -90,7 +97,6 @@ public class Game : Node2D
         Money += ProfitRate * delta;
         MoneyLabel.Text = $"{Money:C2}";
         ProfitLabel.Text = $"{ProfitRate:C2} per second";
-        WellLabel.Text = $"Wells: {Buttons.ToArray()[0].GetNumUnits()}";
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
