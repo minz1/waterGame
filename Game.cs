@@ -13,12 +13,14 @@ public class Game : Node2D
     private int CurrentStage = 1;
     // the threshold needed to progress to the next stage
     private int NextStageRequirement = 1000;
+    private int NextProfitRequirement = 25;
 
     // Labels for different text labels in the game
     private Label MoneyLabel;
     private Label ProfitLabel;
     private Label StageLabel;
     private Label GoalLabel;
+    private Label TargetRateLabel;
 
     // Reference to the GUI node to add buttons and labels to
     private Control GUI;
@@ -26,7 +28,7 @@ public class Game : Node2D
     private ButtonGroup ButtGroup;
 
     // points counting how many bad choices the player has made
-    private int BadPoints = 40;
+    private int BadPoints = 0;
 
     // Basic property for money
     public float Money
@@ -38,7 +40,7 @@ public class Game : Node2D
         set
         {
             if (value > 0)
-                _Money = value;
+                _Money = 0;
         }
     }
 
@@ -189,6 +191,11 @@ public class Game : Node2D
     // function for handing the move between stages
     private void IncreaseStage()
     {
+        if (ProfitRate < NextProfitRequirement)
+        {
+            EndGameRate();
+        }
+
         // increments our stage number variable
         CurrentStage++;
 
@@ -202,6 +209,7 @@ public class Game : Node2D
             ButtGroup.EnableNextButton();
             CreateSecondStageButtons();
             NextStageRequirement = 20000;
+            NextProfitRequirement = 500;
             StageLabel.Text = "Stage: River";
             ProfitRate += 10f;
         }
@@ -212,6 +220,7 @@ public class Game : Node2D
             ButtGroup.EnableNextButton();
             CreateThirdStageButtons();
             NextStageRequirement = 250000;
+            NextProfitRequirement = 7500;
             ProfitRate += 200;
             if (BadPoints >= 10)
             {
@@ -228,7 +237,8 @@ public class Game : Node2D
         {
             ButtGroup.EnableNextButton();
             CreateFourthStageButtons();
-            NextStageRequirement = 1000000;
+            NextStageRequirement = 5000000;
+            NextProfitRequirement = 100000;
             ProfitRate += 5000;
             if (BadPoints >= 20)
             {
@@ -244,7 +254,8 @@ public class Game : Node2D
         if (CurrentStage == 5)
         {
             if (BadPoints >= 20) {
-                ProfitRate = -(ProfitRate * 10);
+                ProfitRate = -(ProfitRate * 0.1f);
+                StageLabel.Text = "Stage 5: ???";
             }
             else
             {
@@ -257,7 +268,12 @@ public class Game : Node2D
         }
     }
 
-    private void EndGame()
+    private void EndGameBad()
+    {
+        // TODO
+    }
+
+    private void EndGameRate()
     {
         // TODO
     }
@@ -269,6 +285,7 @@ public class Game : Node2D
         ProfitLabel = GetNode<Label>("GUI/CanvasLayer/ProfitLabel");
         StageLabel = GetNode<Label>("GUI/CanvasLayer/StageLabel");
         GoalLabel = GetNode<Label>("GUI/CanvasLayer/GoalLabel");
+        TargetRateLabel = GetNode<Label>("GUI/CanvasLayer/TargetRateLabel");
 
         // Pull in GUI reference
         GUI = GetNode<Control>("GUI");
@@ -291,6 +308,7 @@ public class Game : Node2D
         // label text setting handling
         MoneyLabel.Text = $"{Money:C2}";
         ProfitLabel.Text = $"{ProfitRate:C2} per second";
+        TargetRateLabel.Text = $"Next Profit Goal: {NextProfitRequirement:C2} per second";
 
         // sets the goal to something mysterious if a bad player hits the loss condition
         if ((CurrentStage == 5) && (BadPoints >= 20))
@@ -313,7 +331,7 @@ public class Game : Node2D
         // ends the game once the bad player loses all their money
         if ((CurrentStage == 5) && (Money < 0))
         {
-            EndGame();
+            EndGameBad();
         }
     }
 }

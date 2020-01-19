@@ -58,3 +58,10 @@ margin_top = 75.0
 margin_right = 60.0
 margin_bottom = 89.0
 text = "Next Goal: $0"
+
+[node name="TargetRateLabel" type="Label" parent="GUI/CanvasLayer"]
+margin_left = 60.0
+margin_top = 90.0
+margin_right = 147.0
+margin_bottom = 104.0
+text = "Target $/s: $0"
