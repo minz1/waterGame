@@ -17,5 +17,7 @@ public class WLabel : Label
         this.WButton = wbutton;
         Vector2 LabelPos = new Vector2(WButton.GetPosition().x, (WButton.GetPosition().y + WButton.GetSize().y + 2f));
         this.SetPosition(LabelPos);
+        
+        this.SetSize(new Vector2(0f, 14f));
     }
 }

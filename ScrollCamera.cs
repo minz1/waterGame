@@ -1,11 +1,24 @@
 using Godot;
 using System;
 
-public class Camera : Control
+public class ScrollCamera : Control
 {
     private Camera2D Cam;
     private HScrollBar ScrlBar;
     private Vector2 OriginalPos;
+
+    public bool ScrollBarVisibility
+    {
+        set
+        {
+            ScrlBar.Visible = value;
+        }
+    }
+
+    public void ExtendToNextStage()
+    {
+        ScrlBar.MaxValue += 1280;
+    }
 
     public override void _Ready()
     {
