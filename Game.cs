@@ -283,7 +283,7 @@ public class Game : Node2D
     public override void _Ready()
     {
         // pulls in background object
-        Background = GetNode<AnimatedSprite>("GUI/CanvasLayer/Background");
+        Background = GetNode<AnimatedSprite>("ScrollCamera/Camera2D/Background");
         FailScreen = GetNode<Sprite>("GUI/CanvasLayer/FailScreen");
         
         // Pulls in our labels
@@ -293,7 +293,7 @@ public class Game : Node2D
         GoalLabel = GetNode<Label>("GUI/CanvasLayer/GoalLabel");
 
         // Pull in GUI reference
-        ButtonHolder = GetNode<Control>("GUI/CanvasLayer/ButtonHolder");
+        ButtonHolder = GetNode<Control>("GUI/ButtonHolder");
 
         // Get Button Group Reference
         ButtGroup = GetNode<ButtonGroup>("ScrollCamera/CanvasLayer/ButtonGroup");
