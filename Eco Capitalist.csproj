@@ -6,8 +6,8 @@
     <ProjectGuid>{0959EDBF-1B7E-4FC3-B633-4D0010FA5ED4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <OutputPath>.mono/temp/bin/$(Configuration)</OutputPath>
-    <RootNamespace>WaterGame</RootNamespace>
-    <AssemblyName>WaterGame</AssemblyName>
+    <RootNamespace>EcoCapitalist</RootNamespace>
+    <AssemblyName>Eco Capitalist</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>.mono/temp/obj</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)/$(Configuration)</IntermediateOutputPath>
