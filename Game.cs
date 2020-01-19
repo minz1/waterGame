@@ -22,7 +22,7 @@ public class Game : Node2D
 
     // References to the different nodes within the game
     private Control GUI;
-    private ScrollCamera ScrollCamera;
+    private ButtonGroup ButtGroup;
 
     // points counting how many bad choices the player has made
     private int BadPoints = 0;
@@ -156,6 +156,21 @@ public class Game : Node2D
         }
     }
 
+    private void CreateFifthStageButtons()
+    {
+        CreateButton("Plant Trees", 1000f, 15000f, false);
+
+        CreateButton("Clean Landfills", 5000f, 20000f, false);
+
+        CreateButton("Renewable Bottles", 5000f, 1200f, false);
+
+        CreateButton("Hydroelectric Energy", 250000f, 300000f, false);
+
+        CreateButton("Clean Oceans", 5000f, 1000f, false);
+
+        CreateButton("Recycle Plastics", 100000f, 50000f, false);
+    }
+
     private void IncreaseStage()
     {
         CurrentStage++;
@@ -165,16 +180,16 @@ public class Game : Node2D
 
         if (CurrentStage == 2)
         {
+            ButtGroup.EnableNextButton();
             CreateSecondStageButtons();
             NextStageRequirement = 20000;
             StageLabel.Text = "Stage: River";
             ProfitRate += 10f;
-            ScrollCamera.ScrollBarVisibility = true;
-            ScrollCamera.ExtendToNextStage();
         }
 
         if (CurrentStage == 3)
         {
+            ButtGroup.EnableNextButton();
             CreateThirdStageButtons();
             NextStageRequirement = 250000;
             ProfitRate += 200;
@@ -186,11 +201,11 @@ public class Game : Node2D
             {
                 StageLabel.Text = "Stage: Spring Water";
             }
-            ScrollCamera.ExtendToNextStage();
         }
 
         if (CurrentStage == 4)
         {
+            ButtGroup.EnableNextButton();
             CreateThirdStageButtons();
             NextStageRequirement = 1000000;
             ProfitRate += 5000;
@@ -202,13 +217,20 @@ public class Game : Node2D
             {
                 StageLabel.Text = "Stage: Dam";
             }
-            ScrollCamera.ExtendToNextStage();
         }
 
         if (CurrentStage == 5)
         {
             if (BadPoints >= 20) {
                 ProfitRate = -ProfitRate;
+            }
+            else
+            {
+                ButtGroup.EnableNextButton();
+                CreateFifthStageButtons();
+                StageLabel.Text = "Stage 5: Philanthropy";
+                NextStageRequirement = Int32.MaxValue;
+                ProfitRate += 10000;
             }
         }
     }
@@ -229,8 +251,10 @@ public class Game : Node2D
         // Pull in GUI reference
         GUI = GetNode<Control>("GUI");
 
-        // Pull in Camera
-        ScrollCamera = GetNode<ScrollCamera>("ScrollCamera");
+        // Get Button Group Reference
+        ButtGroup = GetNode<ButtonGroup>("ScrollCamera/CanvasLayer/ButtonGroup");
+
+        ButtGroup.EnableNextButton();
 
         CreateFirstStageButtons();
     }

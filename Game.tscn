@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Game.cs" type="Script" id=1]
-[ext_resource path="res://ScrollCamera.cs" type="Script" id=2]
+[ext_resource path="res://ButtonGroup.cs" type="Script" id=2]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,7 +11,6 @@ margin_left = 60.0
 margin_top = 660.0
 margin_right = 100.0
 margin_bottom = 700.0
-script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="ScrollCamera"]
 offset = Vector2( 580, -300 )
@@ -19,13 +18,14 @@ current = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="ScrollCamera"]
 
-[node name="HScrollBar" type="HScrollBar" parent="ScrollCamera/CanvasLayer"]
-visible = false
+[node name="ButtonGroup" type="Control" parent="ScrollCamera/CanvasLayer"]
 margin_left = 60.0
 margin_top = 660.0
-margin_right = 1220.0
-margin_bottom = 690.0
-max_value = 0.0
+margin_right = 100.0
+margin_bottom = 700.0
+script = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="ScrollCamera/CanvasLayer/ButtonGroup"]
 
 [node name="GUI" type="Control" parent="."]
 
