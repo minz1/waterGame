@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Game.cs" type="Script" id=1]
 [ext_resource path="res://ButtonGroup.cs" type="Script" id=2]
@@ -9,7 +9,8 @@
 [ext_resource path="res://assets/level4bad.jpg" type="Texture" id=7]
 [ext_resource path="res://assets/level4good.jpeg" type="Texture" id=8]
 [ext_resource path="res://assets/level5good.jpeg" type="Texture" id=9]
-[ext_resource path="res://Music/1_Aerobatics_in_Slow_Motion.ogg" type="AudioStream" id=10]
+[ext_resource path="res://assets/stage5bad.jpeg" type="Texture" id=10]
+[ext_resource path="res://Music/1_Aerobatics_in_Slow_Motion.ogg" type="AudioStream" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -93,7 +94,11 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="FailScreen" type="Sprite" parent="GUI/CanvasLayer"]
+visible = false
+position = Vector2( 626.394, 346.165 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 10 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 10 )
+stream = ExtResource( 11 )
 autoplay = true

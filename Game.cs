@@ -16,6 +16,7 @@ public class Game : Node2D
 
     // sprite for the game background
     private AnimatedSprite Background;
+    private Sprite FailScreen;
 
     // Labels for different text labels in the game
     private Label MoneyLabel;
@@ -276,13 +277,14 @@ public class Game : Node2D
 
     private void EndGameBad()
     {
-        // TODO
+        FailScreen.Visible = true;
     }
 
     public override void _Ready()
     {
         // pulls in background object
         Background = GetNode<AnimatedSprite>("GUI/CanvasLayer/Background");
+        FailScreen = GetNode<Sprite>("GUI/CanvasLayer/FailScreen");
         
         // Pulls in our labels
         MoneyLabel = GetNode<Label>("GUI/CanvasLayer/MoneyLabel");
