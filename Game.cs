@@ -246,12 +246,12 @@ public class Game : Node2D
             ProfitRate += 5000;
             if (BadPoints >= 20)
             {
-                Background.Frame = 5;
+                Background.Frame = 4;
                 StageLabel.Text = "Stage: Glacier";
             }
             else
             {
-                Background.Frame = 4;
+                Background.Frame = 5;
                 StageLabel.Text = "Stage: Dam";
             }
         }
@@ -265,7 +265,7 @@ public class Game : Node2D
             }
             else
             {
-                Background.Frame = 5;
+                Background.Frame = 6;
                 ButtGroup.EnableNextButton();
                 CreateFifthStageButtons();
                 StageLabel.Text = "Stage 5: Philanthropy";
