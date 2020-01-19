@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/3_Technopop_7d.ogg-780ae49f790b52dea957e1127a379fc2.oggstr"
+
+[deps]
+
+source_file="res://Music/3_Technopop_7d.ogg"
+dest_files=[ "res://.import/3_Technopop_7d.ogg-780ae49f790b52dea957e1127a379fc2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/8_Fields_of_the_Lost.ogg-65eef7aea6874bf9c7db4cde5a48c2cc.oggstr"
+
+[deps]
+
+source_file="res://Music/8_Fields_of_the_Lost.ogg"
+dest_files=[ "res://.import/8_Fields_of_the_Lost.ogg-65eef7aea6874bf9c7db4cde5a48c2cc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

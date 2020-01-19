@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="WaterGame"
+config/name="Eco Capitalist"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 

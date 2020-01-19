@@ -1,17 +1,21 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game.cs" type="Script" id=1]
-[ext_resource path="res://ButtonGroup.cs" type="Script" id=2]
-[ext_resource path="res://assets/level1.jpeg" type="Texture" id=3]
-[ext_resource path="res://assets/level2.jpeg" type="Texture" id=4]
-[ext_resource path="res://assets/level3bad.jpeg" type="Texture" id=5]
-[ext_resource path="res://assets/level3good.jpeg" type="Texture" id=6]
-[ext_resource path="res://assets/level4bad.jpg" type="Texture" id=7]
-[ext_resource path="res://assets/level4good.jpeg" type="Texture" id=8]
+[ext_resource path="res://assets/level1.jpeg" type="Texture" id=2]
+[ext_resource path="res://assets/level2.jpeg" type="Texture" id=3]
+[ext_resource path="res://assets/level3bad.jpeg" type="Texture" id=4]
+[ext_resource path="res://assets/level3good.jpeg" type="Texture" id=5]
+[ext_resource path="res://assets/level4bad.jpg" type="Texture" id=6]
+[ext_resource path="res://assets/level4good.jpeg" type="Texture" id=7]
+[ext_resource path="res://assets/level5good.jpeg" type="Texture" id=8]
+[ext_resource path="res://Background.cs" type="Script" id=9]
+[ext_resource path="res://ButtonGroup.cs" type="Script" id=10]
+[ext_resource path="res://assets/stage5bad.jpeg" type="Texture" id=11]
+[ext_resource path="res://Music/1_Aerobatics_in_Slow_Motion.ogg" type="AudioStream" id=12]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -30,6 +34,13 @@ margin_bottom = 700.0
 offset = Vector2( 580, -300 )
 current = true
 
+[node name="Background" type="AnimatedSprite" parent="ScrollCamera/Camera2D"]
+position = Vector2( -60, -660 )
+scale = Vector2( 0.6, 0.6 )
+frames = SubResource( 1 )
+centered = false
+script = ExtResource( 9 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="ScrollCamera"]
 
 [node name="ButtonGroup" type="Control" parent="ScrollCamera/CanvasLayer"]
@@ -37,18 +48,13 @@ margin_left = 60.0
 margin_top = 660.0
 margin_right = 100.0
 margin_bottom = 700.0
-script = ExtResource( 2 )
+script = ExtResource( 10 )
 
 [node name="Tween" type="Tween" parent="ScrollCamera/CanvasLayer/ButtonGroup"]
 
 [node name="GUI" type="Control" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GUI"]
-
-[node name="Background" type="AnimatedSprite" parent="GUI/CanvasLayer"]
-scale = Vector2( 0.6, 0.6 )
-frames = SubResource( 1 )
-centered = false
 
 [node name="ProfitLabel" type="Label" parent="GUI/CanvasLayer"]
 margin_left = 60.0
@@ -78,14 +84,24 @@ margin_right = 60.0
 margin_bottom = 89.0
 text = "Next Goal: $0"
 
-[node name="ColorRect" type="ColorRect" parent="GUI/CanvasLayer"]
+[node name="FailScreen" type="Sprite" parent="GUI/CanvasLayer"]
+visible = false
+position = Vector2( 626.394, 346.165 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 11 )
+
+[node name="ButtonHolder" type="Control" parent="GUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="GUI/ButtonHolder"]
 modulate = Color( 1, 1, 1, 0.803922 )
 margin_left = -91.0
 margin_top = 115.0
-margin_right = 1407.0
+margin_right = 10567.0
 margin_bottom = 692.0
 color = Color( 0.25098, 0.25098, 0.25098, 1 )
 
-[node name="ButtonHolder" type="Control" parent="GUI/CanvasLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+autoplay = true

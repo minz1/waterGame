@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1_Aerobatics_in_Slow_Motion.ogg-6d5e4ef75ba48c9b88c5bc27ced8cc64.oggstr"
+
+[deps]
+
+source_file="res://Music/1_Aerobatics_in_Slow_Motion.ogg"
+dest_files=[ "res://.import/1_Aerobatics_in_Slow_Motion.ogg-6d5e4ef75ba48c9b88c5bc27ced8cc64.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

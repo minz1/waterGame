@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Game : Node2D
 {
     // initial amount of money player has
-    private float _Money = 990f;
+    private float _Money = 0f;
     // the amount of money player earns per second
     private float _ProfitRate = 1f;
 
@@ -16,6 +16,7 @@ public class Game : Node2D
 
     // sprite for the game background
     private AnimatedSprite Background;
+    private Sprite FailScreen;
 
     // Labels for different text labels in the game
     private Label MoneyLabel;
@@ -245,12 +246,12 @@ public class Game : Node2D
             ProfitRate += 5000;
             if (BadPoints >= 20)
             {
-                Background.Frame = 5;
+                Background.Frame = 4;
                 StageLabel.Text = "Stage: Glacier";
             }
             else
             {
-                Background.Frame = 4;
+                Background.Frame = 5;
                 StageLabel.Text = "Stage: Dam";
             }
         }
@@ -264,7 +265,7 @@ public class Game : Node2D
             }
             else
             {
-                Background.Frame = 5;
+                Background.Frame = 6;
                 ButtGroup.EnableNextButton();
                 CreateFifthStageButtons();
                 StageLabel.Text = "Stage 5: Philanthropy";
@@ -276,23 +277,23 @@ public class Game : Node2D
 
     private void EndGameBad()
     {
-        // TODO
+        FailScreen.Visible = true;
     }
 
     public override void _Ready()
     {
         // pulls in background object
-        Background = GetNode<AnimatedSprite>("GUI/CanvasLayer/Background");
+        Background = GetNode<AnimatedSprite>("ScrollCamera/Camera2D/Background");
+        FailScreen = GetNode<Sprite>("GUI/CanvasLayer/FailScreen");
         
         // Pulls in our labels
         MoneyLabel = GetNode<Label>("GUI/CanvasLayer/MoneyLabel");
         ProfitLabel = GetNode<Label>("GUI/CanvasLayer/ProfitLabel");
         StageLabel = GetNode<Label>("GUI/CanvasLayer/StageLabel");
         GoalLabel = GetNode<Label>("GUI/CanvasLayer/GoalLabel");
-        TargetRateLabel = GetNode<Label>("GUI/CanvasLayer/TargetRateLabel");
 
         // Pull in GUI reference
-        ButtonHolder = GetNode<Control>("GUI/CanvasLayer/ButtonHolder");
+        ButtonHolder = GetNode<Control>("GUI/ButtonHolder");
 
         // Get Button Group Reference
         ButtGroup = GetNode<ButtonGroup>("ScrollCamera/CanvasLayer/ButtonGroup");
