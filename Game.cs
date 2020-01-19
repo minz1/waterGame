@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Game : Node2D
 {
     // initial amount of money player has
-    private float _Money = 990f;
+    private float _Money = 0f;
     // the amount of money player earns per second
     private float _ProfitRate = 1f;
 
@@ -289,7 +289,6 @@ public class Game : Node2D
         ProfitLabel = GetNode<Label>("GUI/CanvasLayer/ProfitLabel");
         StageLabel = GetNode<Label>("GUI/CanvasLayer/StageLabel");
         GoalLabel = GetNode<Label>("GUI/CanvasLayer/GoalLabel");
-        TargetRateLabel = GetNode<Label>("GUI/CanvasLayer/TargetRateLabel");
 
         // Pull in GUI reference
         ButtonHolder = GetNode<Control>("GUI/CanvasLayer/ButtonHolder");

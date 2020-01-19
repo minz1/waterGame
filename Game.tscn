@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Game.cs" type="Script" id=1]
 [ext_resource path="res://ButtonGroup.cs" type="Script" id=2]
@@ -8,10 +8,12 @@
 [ext_resource path="res://assets/level3good.jpeg" type="Texture" id=6]
 [ext_resource path="res://assets/level4bad.jpg" type="Texture" id=7]
 [ext_resource path="res://assets/level4good.jpeg" type="Texture" id=8]
+[ext_resource path="res://assets/level5good.jpeg" type="Texture" id=9]
+[ext_resource path="res://Music/1_Aerobatics_in_Slow_Motion.ogg" type="AudioStream" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -89,3 +91,9 @@ color = Color( 0.25098, 0.25098, 0.25098, 1 )
 [node name="ButtonHolder" type="Control" parent="GUI/CanvasLayer"]
 margin_right = 40.0
 margin_bottom = 40.0
+
+[node name="FailScreen" type="Sprite" parent="GUI/CanvasLayer"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+autoplay = true
