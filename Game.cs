@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Game : Node2D
 {
     // initial amount of money player has
-    private float _Money = 0f;
+    private float _Money = 990f;
     // the amount of money player earns per second
     private float _ProfitRate = 1f;
 
@@ -13,7 +13,9 @@ public class Game : Node2D
     private int CurrentStage = 1;
     // the threshold needed to progress to the next stage
     private int NextStageRequirement = 1000;
-    private int NextProfitRequirement = 25;
+
+    // sprite for the game background
+    private AnimatedSprite Background;
 
     // Labels for different text labels in the game
     private Label MoneyLabel;
@@ -23,7 +25,7 @@ public class Game : Node2D
     private Label TargetRateLabel;
 
     // Reference to the GUI node to add buttons and labels to
-    private Control GUI;
+    private Control ButtonHolder;
     // reference to button group for UI navigation
     private ButtonGroup ButtGroup;
 
@@ -40,7 +42,13 @@ public class Game : Node2D
         set
         {
             if (value < 0)
+            {
                 _Money = 0;
+            }
+            else
+            {
+                _Money = value;
+            }
         }
     }
 
@@ -80,14 +88,14 @@ public class Game : Node2D
         }
 
         WButton button = new WButton(buttName, baseCost, cashPerSec, isBad);
-        GUI.AddChild(button);
+        ButtonHolder.AddChild(button);
 
         float xPos = ButtXVals[XIndex] + (1280f * (CurrentStage - 1f));
         button.SetPosition(new Vector2(xPos, ButtYVals[YIndex]));
         button.SetSize(new Vector2(220f, 100f));
 
         WLabel label = new WLabel(button);
-        GUI.AddChild(label);
+        ButtonHolder.AddChild(label);
 
         YIndex++;
     }
@@ -191,11 +199,6 @@ public class Game : Node2D
     // function for handing the move between stages
     private void IncreaseStage()
     {
-        if (ProfitRate < NextProfitRequirement)
-        {
-            EndGameRate();
-        }
-        
         // increments our stage number variable
         CurrentStage++;
 
@@ -206,10 +209,10 @@ public class Game : Node2D
         // enables the next button in the button group, moves us to the next stage and changes the name
         if (CurrentStage == 2)
         {
+            Background.Frame = 1;
             ButtGroup.EnableNextButton();
             CreateSecondStageButtons();
             NextStageRequirement = 20000;
-            NextProfitRequirement = 500;
             StageLabel.Text = "Stage: River";
             ProfitRate += 10f;
         }
@@ -220,14 +223,15 @@ public class Game : Node2D
             ButtGroup.EnableNextButton();
             CreateThirdStageButtons();
             NextStageRequirement = 250000;
-            NextProfitRequirement = 7500;
             ProfitRate += 200;
             if (BadPoints >= 10)
             {
+                Background.Frame = 2;
                 StageLabel.Text = "Stage: Ocean";
             }
             else
             {
+                Background.Frame = 3;
                 StageLabel.Text = "Stage: Spring Water";
             }
         }
@@ -238,14 +242,15 @@ public class Game : Node2D
             ButtGroup.EnableNextButton();
             CreateFourthStageButtons();
             NextStageRequirement = 5000000;
-            NextProfitRequirement = 100000;
             ProfitRate += 5000;
             if (BadPoints >= 20)
             {
+                Background.Frame = 5;
                 StageLabel.Text = "Stage: Glacier";
             }
             else
             {
+                Background.Frame = 4;
                 StageLabel.Text = "Stage: Dam";
             }
         }
@@ -259,6 +264,7 @@ public class Game : Node2D
             }
             else
             {
+                Background.Frame = 5;
                 ButtGroup.EnableNextButton();
                 CreateFifthStageButtons();
                 StageLabel.Text = "Stage 5: Philanthropy";
@@ -273,13 +279,11 @@ public class Game : Node2D
         // TODO
     }
 
-    private void EndGameRate()
-    {
-        // TODO
-    }
-
     public override void _Ready()
     {
+        // pulls in background object
+        Background = GetNode<AnimatedSprite>("GUI/CanvasLayer/Background");
+        
         // Pulls in our labels
         MoneyLabel = GetNode<Label>("GUI/CanvasLayer/MoneyLabel");
         ProfitLabel = GetNode<Label>("GUI/CanvasLayer/ProfitLabel");
@@ -288,7 +292,7 @@ public class Game : Node2D
         TargetRateLabel = GetNode<Label>("GUI/CanvasLayer/TargetRateLabel");
 
         // Pull in GUI reference
-        GUI = GetNode<Control>("GUI");
+        ButtonHolder = GetNode<Control>("GUI/CanvasLayer/ButtonHolder");
 
         // Get Button Group Reference
         ButtGroup = GetNode<ButtonGroup>("ScrollCamera/CanvasLayer/ButtonGroup");
@@ -308,7 +312,6 @@ public class Game : Node2D
         // label text setting handling
         MoneyLabel.Text = $"{Money:C2}";
         ProfitLabel.Text = $"{ProfitRate:C2} per second";
-        TargetRateLabel.Text = $"Next Profit Goal: {NextProfitRequirement:C2} per second";
 
         // sets the goal to something mysterious if a bad player hits the loss condition
         if ((CurrentStage == 5) && (BadPoints >= 20))
