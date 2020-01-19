@@ -39,7 +39,7 @@ public class Game : Node2D
         }
         set
         {
-            if (value > 0)
+            if (value < 0)
                 _Money = 0;
         }
     }
@@ -195,7 +195,7 @@ public class Game : Node2D
         {
             EndGameRate();
         }
-
+        
         // increments our stage number variable
         CurrentStage++;
 
