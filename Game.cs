@@ -26,7 +26,7 @@ public class Game : Node2D
     private ButtonGroup ButtGroup;
 
     // points counting how many bad choices the player has made
-    private int BadPoints = 0;
+    private int BadPoints = 40;
 
     // Basic property for money
     public float Money
@@ -244,7 +244,7 @@ public class Game : Node2D
         if (CurrentStage == 5)
         {
             if (BadPoints >= 20) {
-                ProfitRate = -ProfitRate;
+                ProfitRate = -(ProfitRate * 10);
             }
             else
             {
@@ -296,6 +296,7 @@ public class Game : Node2D
         if ((CurrentStage == 5) && (BadPoints >= 20))
         {
             GoalLabel.Text = "Next Goal: ???";
+            ProfitRate = -ProfitRate;
         }
         else
         {
