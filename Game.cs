@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Game : Node2D
 {
     // private constants for calculating the money the player has
-    private float _Money = 0f;
+    private float _Money = 1000000f;
     private float _ProfitRate = 1f;
 
     private int CurrentStage = 1;
@@ -15,6 +15,7 @@ public class Game : Node2D
     private Label MoneyLabel;
     private Label ProfitLabel;
     private Label StageLabel;
+    private Label GoalLabel;
 
     // List of all the buttons in the game
     private List<WButton> Stage2Buttons = new List<WButton>();
@@ -99,14 +100,59 @@ public class Game : Node2D
 
         CreateButton("Tap Water", 200f, 40f, false);
 
-        CreateButton("Bottled Water", 250f, 30f, true);
+        CreateButton("Plastic Bottles", 250f, 30f, true);
     }
 
     private void CreateThirdStageButtons()
     {
-        if (BadPoints >= 5)
+        CreateButton("Clean Landfills", 1500f, 300f, false);
+
+        CreateButton("Collect Rain Water", 1200f, 200f, false);
+
+        CreateButton("Cheap Plastic Bottles", 450f, 200f, true);
+
+        CreateButton("3rd World Plants", 1000f, 400f, true);
+
+
+        if (BadPoints >= 10)
         {
-            //CreateButton("");
+            CreateButton("Florescent Lights", 500f, 250f, true);
+
+            CreateButton("Gas Powered Pumps", 700f, 350f, true);
+        }
+        else
+        {
+            CreateButton("Solar-Powered Pumps", 700f, 200f, false);
+
+            CreateButton("Local Water Plants", 1200f, 250f, false);
+        }
+    }
+
+    private void CreateFourthStageButtons()
+    {
+        CreateButton("Styrofoam Bottles", 9000f, 3000f, true);
+
+        CreateButton("Hydro-Electric Power", 14000f, 2500f, false);
+
+        if (BadPoints >= 20)
+        {
+            CreateButton("Mega Plants", 10000f, 7000f, true);
+
+            CreateButton("Cheap Piping", 8000f, 4800f, true);
+
+            CreateButton("De-Regulation Lobbying", 11000f, 10000f, true);
+
+            CreateButton("Glacier Melting", 11000f, 20000f, true);
+        }
+        else
+        {
+            CreateButton("Tighter Quality Control", 13000f, 4000f, false);
+
+            CreateButton("Wind Powered Plants", 12000f, 4500f, false);
+
+            CreateButton("Electric Transport", 11000f, 3000f, false);
+
+            CreateButton("Sanitation Plants", 1000f, 2800f, false);
         }
     }
 
@@ -120,14 +166,19 @@ public class Game : Node2D
         if (CurrentStage == 2)
         {
             CreateSecondStageButtons();
-            NextStageRequirement = 10000;
+            NextStageRequirement = 20000;
             StageLabel.Text = "Stage: River";
             ProfitRate += 10f;
             ScrollCamera.ScrollBarVisibility = true;
+            ScrollCamera.ExtendToNextStage();
         }
+
         if (CurrentStage == 3)
         {
-            if (BadPoints >= 5)
+            CreateThirdStageButtons();
+            NextStageRequirement = 250000;
+            ProfitRate += 200;
+            if (BadPoints >= 10)
             {
                 StageLabel.Text = "Stage: Ocean";
             }
@@ -135,7 +186,36 @@ public class Game : Node2D
             {
                 StageLabel.Text = "Stage: Spring Water";
             }
+            ScrollCamera.ExtendToNextStage();
         }
+
+        if (CurrentStage == 4)
+        {
+            CreateThirdStageButtons();
+            NextStageRequirement = 1000000;
+            ProfitRate += 5000;
+            if (BadPoints >= 20)
+            {
+                StageLabel.Text = "Stage: Glacier";
+            }
+            else
+            {
+                StageLabel.Text = "Stage: Dam";
+            }
+            ScrollCamera.ExtendToNextStage();
+        }
+
+        if (CurrentStage == 5)
+        {
+            if (BadPoints >= 20) {
+                ProfitRate = -ProfitRate;
+            }
+        }
+    }
+
+    private void EndGame()
+    {
+        // TODO
     }
 
     public override void _Ready()
@@ -144,6 +224,7 @@ public class Game : Node2D
         MoneyLabel = GetNode<Label>("GUI/CanvasLayer/MoneyLabel");
         ProfitLabel = GetNode<Label>("GUI/CanvasLayer/ProfitLabel");
         StageLabel = GetNode<Label>("GUI/CanvasLayer/StageLabel");
+        GoalLabel = GetNode<Label>("GUI/CanvasLayer/GoalLabel");
 
         // Pull in GUI reference
         GUI = GetNode<Control>("GUI");
@@ -159,10 +240,23 @@ public class Game : Node2D
         Money += ProfitRate * delta;
         MoneyLabel.Text = $"{Money:C2}";
         ProfitLabel.Text = $"{ProfitRate:C2} per second";
+        if ((CurrentStage == 5) && (BadPoints >= 20))
+        {
+            GoalLabel.Text = "Next Goal: ???";
+        }
+        else
+        {
+            GoalLabel.Text = $"Next Goal: {NextStageRequirement:C2}";
+        }
 
         if (Money > NextStageRequirement)
         {
             IncreaseStage();
+        }
+
+        if ((CurrentStage == 5) && (Money < 0))
+        {
+            EndGame();
         }
     }
 }
